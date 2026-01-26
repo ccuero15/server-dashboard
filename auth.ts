@@ -8,6 +8,8 @@ import prisma from "@/lib/prisma";  // Tu instancia de Prisma Client
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" }, // Usamos JWT para sesiones rápidas
+  secret: process.env.AUTH_SECRET,
+  basePath: "/api/auth",
   providers: [
     Credentials({
       name: "Credentials",

@@ -2,7 +2,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 import 'dotenv/config';
 import bcrypt from "bcryptjs";
-import { Prisma, PrismaClient } from '@/app/generated/prisma/client';
+import { Prisma, PrismaClient } from '@/generated/prisma/client';
 
 // Configuración del pool para el adaptador de Postgres
 const connectionString = `${process.env.DATABASE_URL}`;
