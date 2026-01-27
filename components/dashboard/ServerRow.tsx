@@ -1,11 +1,13 @@
 import { ServerWithLastCheck } from "@/types/server";
+import { Search } from "lucide-react";
+import Link from "next/link";
 
 // src/components/dashboard/ServerRow.tsx
 export default function ServerRow({ server }: { server: ServerWithLastCheck }) {
   const lastCheck = server.lastCheck;
-  
+
   // Lógica de estado: Si no hay checks o el último fue hace más de 5 min, está offline
-  const isOnline = lastCheck 
+  const isOnline = lastCheck
     ? (new Date().getTime() - new Date(lastCheck.measuredAt).getTime()) < 5 * 60 * 1000
     : false;
 
@@ -33,9 +35,9 @@ export default function ServerRow({ server }: { server: ServerWithLastCheck }) {
             <span>{cpu}%</span>
           </div>
           <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <div 
-              className={`h-full transition-all ${cpu > 85 ? 'bg-red-500' : 'bg-primary'}`} 
-              style={{ width: `${cpu}%` }} 
+            <div
+              className={`h-full transition-all ${cpu > 85 ? 'bg-red-500' : 'bg-primary'}`}
+              style={{ width: `${cpu}%` }}
             />
           </div>
         </div>
@@ -47,16 +49,18 @@ export default function ServerRow({ server }: { server: ServerWithLastCheck }) {
             <span>{ram}%</span>
           </div>
           <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <div 
-              className={`h-full transition-all ${ram > 90 ? 'bg-amber-500' : 'bg-indigo-500'}`} 
-              style={{ width: `${ram}%` }} 
+            <div
+              className={`h-full transition-all ${ram > 90 ? 'bg-amber-500' : 'bg-indigo-500'}`}
+              style={{ width: `${ram}%` }}
             />
           </div>
         </div>
       </td>
       <td className="py-4 px-6 text-right">
         <button className="p-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-600 transition-all text-slate-400">
-          <span className="material-symbols-outlined">terminal</span>
+          <Link href={`/servers/${server.id}`}>
+            <Search size={16} />
+          </Link>
         </button>
       </td>
     </tr>
