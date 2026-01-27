@@ -44,15 +44,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    // Metemos el rol en el token JWT
+callbacks: {
     async jwt({ token, user }) {
-      if (user && "role" in user) token.role = (user as { role?: string }).role;
+      // Cuando el usuario hace login, guardamos el role en el token
+      if (user && typeof user === "object" && "role" in user) {
+        token.role = (user as { role?: string }).role;
+      }
       return token;
     },
-    // Hacemos que el rol esté disponible en la sesión del cliente
     async session({ session, token }) {
-      if (token.role) (session.user as { role?: string }).role = token.role as string;
+      // Pasamos el role del token a la sesión del cliente
+      if (token.role && session.user) {
+        session.user.role = token.role as string;
+      }
       return session;
     },
   },

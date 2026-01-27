@@ -13,13 +13,20 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
     console.log('🚀 Iniciando el Seeding...');
 
+    //0. Limpieza previa (opcional)
+     await prisma.topProcess.deleteMany();
+     await prisma.healthCheck.deleteMany();
+     await prisma.server.deleteMany();
+     await prisma.user.deleteMany();
+     console.log('🧹 Datos previos eliminados.');
+
     // 1. Crear Usuarios
-    const adminPassword = await bcrypt.hash('admin123', 10);
+    const adminPassword = await bcrypt.hash('123', 10);
     const userPassword = await bcrypt.hash('user123', 10);
 
     const users = [
         {
-            email: 'admin@empresa.com',
+            email: 'admin@fibex.com',
             name: 'Super Admin',
             password: adminPassword,
             role: 'ADMIN' as const,
@@ -69,7 +76,43 @@ async function main() {
         where: { hostname: 'srv-prod-01' },
     });
 
+    // TODO: crear varias métricas para varios servidores
+
+    const targetServer2 = await prisma.server.findUnique({
+        where: { hostname: 'srv-db-cluster' },
+    });
+
+    if (targetServer2) {
+        const checkNormal = await prisma.healthCheck.createMany({
+            data: [
+                {
+                    serverId: targetServer2.id,
+                    cpuUsage: new Prisma.Decimal(45.2),
+                    ramUsage: new Prisma.Decimal(55.1),
+                    diskUsage: new Prisma.Decimal(65.3),
+                    measuredAt: new Date(Date.now() - 15 * 60 * 1000), // 15 minutos atrás
+                },
+                {
+                    serverId: targetServer2.id,
+                    cpuUsage: new Prisma.Decimal(50.5),
+                    ramUsage: new Prisma.Decimal(57.8),
+                    diskUsage: new Prisma.Decimal(66.0),
+                    measuredAt: new Date(Date.now() - 10 * 60 * 1000), // 10 minutos atrás
+                },
+                {
+                    serverId: targetServer2.id,
+                    cpuUsage: new Prisma.Decimal(48.9),
+                    ramUsage: new Prisma.Decimal(60.0),
+                    diskUsage: new Prisma.Decimal(67.2),
+                    measuredAt: new Date(Date.now() - 5 * 60 * 1000), // 5 minutos atrás
+                }
+            ]
+        });
+        console.log(`✅ Métricas normales creadas para el servidor: ${checkNormal.count}`);
+    }
+
     if (targetServer) {
+
         // La magia de Prisma: Creación anidada
         const checkConPico = await prisma.healthCheck.create({
             data: {
@@ -83,12 +126,14 @@ async function main() {
                         {
                             processName: 'node-backend',
                             cpuPercent: new Prisma.Decimal(70.2),
-                            memPercent: new Prisma.Decimal(15.5)
+                            memPercent: new Prisma.Decimal(15.5),
+                            pid: 1234
                         },
                         {
                             processName: 'postgresql',
                             cpuPercent: new Prisma.Decimal(10.1),
-                            memPercent: new Prisma.Decimal(20.0)
+                            memPercent: new Prisma.Decimal(20.0),
+                            pid: 2345
                         }
                     ]
                 }
