@@ -48,7 +48,7 @@ model TopProcess {
   processName String  @map("process_name") @db.VarChar(255)
   cpuPercent  Decimal @map("cpu_percent") @db.Decimal(5, 2)
   memPercent  Decimal @map("mem_percent") @db.Decimal(5, 2)
-  pid         Int     @db.Integer
+  pid         Int?     @db.Integer
   healthCheck HealthCheck @relation(fields: [checkId], references: [id], onDelete: Cascade)
 
   @@index([checkId], name: "idx_topprocesses_check_id")
