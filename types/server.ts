@@ -39,3 +39,46 @@ export interface Process {
   ramUsage: number;
   pid: number;
 }
+
+export interface ServerMetrics {
+  serverId: string;
+  hostname: string;
+  ipAddress: string;
+  cpuUsage: number;
+  ramUsage: number;
+  diskUsage: number;
+  osInfo: string;
+  status: 'online' | 'offline' | 'warning';
+  lastUpdate: Date;
+}
+
+export interface SSEProcess {
+  pid: number;
+  name: string;
+  cpuUsage: number;
+  ramUsage: number;
+}
+
+export interface SSEMessage {
+  serverId: string;
+  hostname: string;
+  cpuUsage: number;
+  ramUsage: number;
+  diskUsage: number;
+  processes?: SSEProcess[];
+}
+
+export interface ChartMetric {
+  time: string;
+  cpu: number;
+  ram: number;
+  disk: number;
+}
+
+export interface Process {
+  id: string;
+  name: string;
+  cpuUsage: number;
+  ramUsage: number;
+  pid: number;
+}
