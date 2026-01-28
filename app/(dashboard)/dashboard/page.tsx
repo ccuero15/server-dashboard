@@ -29,23 +29,23 @@ export default async function DashboardPage() {
         ipAddress: s.ipAddress,
         osInfo: s.osInfo,
         createdAt: s.createdAt || new Date(),
-        lastCheck: s.healthChecks[ 0 ] ? {
-            cpuUsage: Number(s.healthChecks[ 0 ].cpuUsage),
-            ramUsage: Number(s.healthChecks[ 0 ].ramUsage),
-            diskUsage: Number(s.healthChecks[ 0 ].diskUsage),
-            measuredAt: s.healthChecks[ 0 ].measuredAt,
+        lastCheck: s.healthChecks[0] ? {
+            cpuUsage: Number(s.healthChecks[0].cpuUsage),
+            ramUsage: Number(s.healthChecks[0].ramUsage),
+            diskUsage: Number(s.healthChecks[0].diskUsage),
+            measuredAt: s.healthChecks[0].measuredAt,
         }
-            : undefined
+        : undefined
     }));
 
     // Cálculos para los KPIs Globales
     const totalServers = serversData.length;
     const serversWithAlerts = serversData.filter(s => (s.lastCheck?.cpuUsage || 0) > 80).length;
-    const avgCpu = totalServers > 0
-        ? (serversData.reduce((acc, s) => acc + (s.lastCheck?.cpuUsage || 0), 0) / totalServers).toFixed(1)
+    const avgCpu = totalServers > 0 
+        ? (serversData.reduce((acc, s) => acc + (s.lastCheck?.cpuUsage || 0), 0) / totalServers).toFixed(1) 
         : 0;
-
-    const serverChecks = servers.flatMap(s => s.healthChecks);
+    
+        const serverChecks = servers.flatMap(s => s.healthChecks);
 
     const chartData = serverChecks.map((check) => ({
         time: new Date(check.measuredAt).toLocaleTimeString([], {
