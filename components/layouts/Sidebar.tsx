@@ -22,8 +22,8 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { title: "Servers", href: "/servers", icon: Server },
-  { title: "Security", href: "/security", icon: ShieldCheck },
-  { title: "Settings", href: "/settings", icon: Settings },
+  /* { title: "Security", href: "/security", icon: ShieldCheck },
+  { title: "Settings", href: "/settings", icon: Settings }, */
 ];
 
 export default function Sidebar() {

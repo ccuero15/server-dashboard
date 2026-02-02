@@ -52,7 +52,7 @@ export default async function ServersPage() {
 
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         {/* Toolbar de búsqueda rápida */}
-        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center gap-4">
+       {/*  <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
             <input 
@@ -61,7 +61,7 @@ export default async function ServersPage() {
               className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/50 border-none rounded-lg text-sm outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">

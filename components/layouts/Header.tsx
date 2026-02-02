@@ -5,16 +5,17 @@ import { signOut, useSession } from "next-auth/react";
 import { 
   LogOut, 
   User as UserIcon, 
-  Settings, 
+  //Settings, 
   ChevronDown,
-  Search,
+  //Search,
   Bell
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
-
+  const urlPath = usePathname().replace("/", "");
   const user = session?.user;
 
   if (!user) return <div className="h-20" />; // Esqueleto mínimo
@@ -23,16 +24,16 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-8 py-4 flex items-center justify-between">
       <div className="flex items-center gap-6">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-          System Overview
+          {urlPath}
         </h2>
-        <div className="relative w-80 hidden md:block">
+        {/* <div className="relative w-80 hidden md:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary text-sm placeholder:text-slate-500 outline-none"
             placeholder="Search servers..."
             type="text"
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-4">
